@@ -52,6 +52,13 @@ class Server:
         self.listeningSocket.listen(backlog)
         self.connection_callback = connection_callback
         self.alive = True
+        start_new_thread(self.__loop, ())
+
+    def keep_alive(self):
+        while self.alive:
+            pass
+
+    def __loop(self):
         while self.alive:
             connection = self.listeningSocket.accept()[0]
             self.connection_callback(connection)
